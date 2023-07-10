@@ -70,5 +70,54 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    private val _deleteNote = MutableLiveData<Boolean>()
+    val deleteNote: LiveData<Boolean> get() = _deleteNote
+
+
+    fun deleteNote(note: Note) {
+        CoroutineScope(Dispatchers.IO).launch {
+            getDatabase().let { database ->
+                note.id?.let { id ->
+                    database.document(id).delete()
+                        .addOnSuccessListener {
+                            _deleteNote.value = true
+                        }
+                        .addOnFailureListener {
+                            _deleteNote.value = false
+                        }
+                } ?: run {
+                    _databaseFailure.value = FirebaseDatabaseFailure("Id nulo")
+                }
+
+            }
+        }
+    }
+
+    private val _updateNote = MutableLiveData<Boolean>()
+    val updateNote: LiveData<Boolean> get() = _updateNote
+
+    fun updateNote(note: Note) {
+        CoroutineScope(Dispatchers.IO).launch {
+            getDatabase().let { database ->
+                note.id?.let { id ->
+                    note.note?.let {
+                        val map = hashMapOf<String, Any>("note" to it)
+                        database.document(id).update(map)
+                            .addOnSuccessListener {
+                                _updateNote.value = true
+                            }
+                            .addOnFailureListener {
+                                _updateNote.value = false
+                            }
+                    } ?: run {
+                        _databaseFailure.value = FirebaseDatabaseFailure("Nota vazia")
+                    }
+                } ?: run {
+                    _databaseFailure.value = FirebaseDatabaseFailure("Id nulo")
+                }
+            }
+        }
+    }
+
 
 }

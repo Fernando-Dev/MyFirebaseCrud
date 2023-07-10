@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_delete_note"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,9 +26,8 @@
         android:contentDescription="@null"
         android:src="@drawable/ic_delete"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/item_text_note"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/item_text_note" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,4 +7,6 @@ interface RecyclerViewClickListener {
     fun onClick(position: Int, note: Note)
     fun onLongClick(position: Int, note: Note)
 
+    fun onDeleteNote(position: Int, note: Note)
+
 }
